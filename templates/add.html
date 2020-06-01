@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}添加任务{% endblock %}
+
+{% block right_body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">TODO-添加任务</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <form method="post" enctype="multipart/form-data" action="/add/">
+                <input id="csrf_token" name="csrf_token" type="hidden" value="">
+                <div class="form-group">
+                    <label class="control-label">任务名称：</label>
+                    <input class="form-control" type="text" name="name">
+                    <label class="text-primary username_error"></label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">类别：</label>
+                    <input class="form-control" type="text" name="category">
+                    <label class="text-primary password_error"></label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">优先级：</label>
+                    <select class="form-control" name="level">
+                        <option value="2">搞不定表碎觉</option>
+                        <option value="1" selected>默认</option>
+                        <option value="0">较低</option>
+                    </select>
+                    <label class="text-primary password_error"></label>
+                </div>
+                <div class="form-group hide">
+                    <label class="control-label">添加时间：</label>
+                    <input class="form-control" type="date" name="add_time" disabled>
+                    <label class="text-primary password_error"></label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">预计完成时间：</label>
+                    <input class="form-control" type="date" name="estimated_time">
+                    <label class="text-primary password_error"></label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">备注：</label>
+                    <textarea class="form-control" name="remark"></textarea>
+                </div>
+                <div class="form-group hide">
+                    <label class="control-label">当前状态：</label>
+                    <select class="form-control" name="status" disabled>
+                        <option value="0" selected>未完成</option>
+                        <option value="1">已完成</option>
+                        <option value="2">已放弃</option>
+                    </select>
+                    <label class="text-primary password_error"></label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

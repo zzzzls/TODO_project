@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}TODO_Show{% endblock %}
+
+{% block head_script %}
+    <script src="/static/js/echarts.min.js"></script>
+{% endblock %}
+
+{% block style %}
+    <style>
+        #pie, #line {
+            height: 400px;
+        }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
+        .table tbody tr td {
+            {# 设置所有表格 垂直居中 #}
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+
+{% block right_body %}
+    <!-- 图表展示 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">数据展示</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="pie">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">数据展示</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="line">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 今日 TODO -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span>Today TODO</span>
+                        <span class="pull-right"><a href="">more</a></span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr class="active row mx-0">
+                            <th class="col-md-5">任务</th>
+                            <th class="col-md-2">事件级别</th>
+                            <th class="col-md-2">任务状态</th>
+                            <th class="col-md-2">预计完成时间</th>
+                            <th class="col-md-1">操作</th>
+                        </tr>
+
+                        {% for todo in dct.today_todo %}
+                            <tr class="row">
+                                <td>{{ todo.todo_name }}</td>
+                                <td>{{ todo.level | todo_level }}</td>
+                                <td>{{ todo.status | todo_status }}</td>
+                                <td>{{ todo.estimated_time }}</td>
+                                <td>
+                                    <a class="btn btn-info" href="{{ url_for('info',id= todo.id) }}">编辑</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 所有 TODO -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span>ALL TODO</span>
+                        <span class="pull-right"><a href="#" style="color:#ffffff">more</a></span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr class="active row mx-0">
+                            <th class="col-md-5">任务</th>
+                            <th class="col-md-2">事件级别</th>
+                            <th class="col-md-2">任务状态</th>
+                            <th class="col-md-2">预计完成时间</th>
+                            <th class="col-md-1">操作</th>
+                        </tr>
+
+                        <tr class="row">
+                            {% for todo in dct.all_todo_list %}
+                            <tr class="row">
+                                <td>{{ todo.todo_name }}</td>
+                                <td>{{ todo.level | todo_level }}</td>
+                                <td>{{ todo.status | todo_status }}</td>
+                                <td>{{ todo.estimated_time }}</td>
+                                <td>
+                                    <a class="btn btn-info" href="{{ url_for('info',id= todo.id) }}">编辑</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/pie.js"></script>
+    <script src="/static/js/line.js"></script>
+{% endblock %}
