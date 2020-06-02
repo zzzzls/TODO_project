@@ -35,9 +35,37 @@ def add():
         return render_template("add.html")
 
 
-@app.route("/info/<int:id>/")
+@app.route("/info/<int:id>/", methods=['GET','POST'])
 def info(id):
     todo = Todo.query.get(id)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        category = request.form.get("category")
+        level = request.form.get("level")
+        add_time = request.form.get("add_time")
+        estimated_time = request.form.get("estimated_time")
+        remark = request.form.get("remark")
+        status = request.form.get("status")
+        estimated_time = datetime.datetime.strptime(estimated_time, "%Y-%m-%d")
+        add_time = datetime.datetime.strptime(add_time, "%Y-%m-%d")
+
+        # 如果 status为1 ,则该任务为已完成,记录当前完成时间
+        if status == "1":
+            real_time = datetime.datetime.now()
+            todo.real_time = real_time
+        else:
+            todo.real_time = None
+        todo.todo_name = name
+        todo.category = category
+        todo.level = level
+        todo.add_time = add_time
+        todo.estimated_time = estimated_time
+        todo.status = status
+        todo.remark = remark
+        todo.update()
+        return redirect("/show/")
+
     return render_template("info.html",todo=todo)
 
 
