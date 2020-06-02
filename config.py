@@ -6,5 +6,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     # 配置数据库文件位置
     abs_path = os.path.abspath(os.path.dirname(__file__))
-    db_path = os.path.join(abs_path, "todo.sqlite")
+    db_path = os.path.join(abs_path, "zzzzls.sqlite")
+    # 测试数据库
+    # db_path = os.path.join(abs_path, "todo.sqlite")
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + db_path

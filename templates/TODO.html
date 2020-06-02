@@ -53,14 +53,14 @@
         </div>
     </div>
 
-    <!-- 今日 TODO -->
+    <!-- 所有 TODO -->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span>Today TODO</span>
-                        <span class="pull-right"><a href="">more</a></span>
+                        <span>ALL TODO</span>
+                        <span class="pull-right"><a href="/show_all_todo/">more</a></span>
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -74,14 +74,14 @@
                             <th class="col-md-1">操作</th>
                         </tr>
 
-                        {% for todo in dct.today_todo %}
+                        {% for todo in dct.all_todo_list %}
                             <tr class="row">
                                 <td>{{ todo.todo_name }}</td>
                                 <td>{{ todo.level | todo_level }}</td>
                                 <td>{{ todo.status | todo_status }}</td>
                                 <td>{{ todo.estimated_time }}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{{ url_for('info',id= todo.id) }}">编辑</a>
+                                    <a class="btn btn-info" href="{{ url_for('edit',id= todo.id) }}">编辑</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -92,13 +92,13 @@
         </div>
     </div>
 
-    <!-- 所有 TODO -->
+    <!-- 已归档 TODO -->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span>ALL TODO</span>
+                        <span>已归档</span>
                         <span class="pull-right"><a href="#" style="color:#ffffff">more</a></span>
                     </h3>
                 </div>
@@ -109,19 +109,19 @@
                             <th class="col-md-5">任务</th>
                             <th class="col-md-2">事件级别</th>
                             <th class="col-md-2">任务状态</th>
-                            <th class="col-md-2">预计完成时间</th>
+                            <th class="col-md-2">实际完成时间</th>
                             <th class="col-md-1">操作</th>
                         </tr>
 
                         <tr class="row">
-                            {% for todo in dct.all_todo_list %}
+                            {% for todo in dct.archive_list %}
                             <tr class="row">
                                 <td>{{ todo.todo_name }}</td>
                                 <td>{{ todo.level | todo_level }}</td>
                                 <td>{{ todo.status | todo_status }}</td>
-                                <td>{{ todo.estimated_time }}</td>
+                                <td>{{ todo.real_time }}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{{ url_for('info',id= todo.id) }}">编辑</a>
+                                    <a class="btn btn-info" href="{{ url_for('edit',id= todo.id) }}">详情</a>
                                 </td>
                             </tr>
                         {% endfor %}

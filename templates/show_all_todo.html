@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}SHOW_ALL_TODO{% endblock %}
+
+{% block style %}
+    <style>
+        .table {
+            margin-bottom: 0px;
+        }
+
+        .table tbody tr td {
+            {# 设置所有表格 垂直居中 #}
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+
+{% block right_body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">TODO-ALL</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-hover">
+            <tbody>
+            <tr class="active row mx-0">
+                <th class="col-md-5">任务</th>
+                <th class="col-md-2">事件级别</th>
+                <th class="col-md-2">任务状态</th>
+                <th class="col-md-2">预计完成时间</th>
+                <th class="col-md-1">操作</th>
+            </tr>
+
+            {% for todo in dct.all_todo_list %}
+                <tr class="row">
+                    <td>{{ todo.todo_name }}</td>
+                    <td>{{ todo.level | todo_level }}</td>
+                    <td>{{ todo.status | todo_status }}</td>
+                    <td>{{ todo.estimated_time }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ url_for('edit',id= todo.id) }}">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

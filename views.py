@@ -8,13 +8,24 @@ from main import app
 @app.route("/show/")
 def show():
     today = datetime.datetime.now().strftime("%Y-%m-%d")
-    today_todo_list = Todo.query.filter(Todo.estimated_time == today,Todo.status == 0).order_by(Todo.level.desc()).all()
-    all_todo_list = Todo.query.all()[-10:]
+    all_todo_list = Todo.query.filter(Todo.status == 0).order_by(Todo.estimated_time).order_by(
+        Todo.level).all()[:7]
+    archive_list = Todo.query.filter(Todo.status != 0).all()[:7]
     dct = {
-        "today_todo": today_todo_list,
-        "all_todo_list": all_todo_list
+        "all_todo_list": all_todo_list,
+        "archive_list": archive_list
     }
     return render_template("TODO.html", dct=dct)
+
+@app.route("/show_all_todo/")
+def show_all_todo():
+    all_todo_list = Todo.query.filter(Todo.status == 0).order_by(Todo.estimated_time).order_by(
+        Todo.level).all()
+    dct = {
+        "all_todo_list": all_todo_list,
+    }
+    return render_template("show_all_todo.html",dct=dct)
+
 
 
 @app.route("/add/", methods=['GET', 'POST'])
@@ -35,8 +46,8 @@ def add():
         return render_template("add.html")
 
 
-@app.route("/info/<int:id>/", methods=['GET','POST'])
-def info(id):
+@app.route("/edit/<int:id>/", methods=['GET', 'POST'])
+def edit(id):
     todo = Todo.query.get(id)
 
     if request.method == "POST":
@@ -66,7 +77,7 @@ def info(id):
         todo.update()
         return redirect("/show/")
 
-    return render_template("info.html",todo=todo)
+    return render_template("edit.html", todo=todo)
 
 
 # 任务状态 过滤器
@@ -74,6 +85,7 @@ def info(id):
 def todo_status(status):
     status_list = ["未完成", "已完成", "已放弃"]
     return status_list[int(status)]
+
 
 # 任务级别 过滤器
 @app.template_filter("todo_level")
